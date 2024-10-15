@@ -1,7 +1,7 @@
 const {User, ProductImage, Product} = require("../models");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken")
-const cloudinary = require('cloudinary').v2;
+
 
  class Controller {
 
@@ -27,7 +27,7 @@ const cloudinary = require('cloudinary').v2;
                 return res.status(401).json({ message: 'Invalid credentials' });
             }
 
-            const token = jwt.sign({id: user.id}, process.env.JWT_SECRET, {expiresIn: "1h"})
+            const token = jwt.sign({id: user.id}, process.env.JWT_SECRET)
             res.json({token})
             console.log(token, 'ini token')
 
@@ -63,13 +63,14 @@ const cloudinary = require('cloudinary').v2;
     // merchantt
     static async AddProduct(req,res,next){
         try {
-           const { title, sku, quantity, images } = req.body
-           const merchantId = req.user?.id
-           const product = await Product.create({ title, sku, quantity, merchantId })
-           for (const image of images) {
-               const result = await cloudinary.uploader.upload(image, { format: 'jpeg' });
-               await ProductImage.create({ productId: product.id, imageUrl: result.secure_url });
+           const { title, sku, quantity, imageUrl , description} = req.body
+           console.log(req.body , 'ini req body')
+           if (!title || !sku || !quantity || !imageUrl) {
+               return res.status(400).json({ message: 'Title, SKU, Quantity, and Image URL are required' });
            }
+           const merchantId = req.user.id
+           const product = await Product.create({ title, sku, quantity, merchantId , description})
+            await ProductImage.create({ productId: product.id, imageUrl })
            return res.status(201).json({ message: 'Product added successfully', product })
         } catch (error) {
             console.log(error)
