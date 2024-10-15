@@ -6,8 +6,13 @@ const Login = async (data : {username: string ;password: string})=>{
     localStorage.setItem('token', response.data.token)
 }
 
+const Register = async (data : {username: string ;password: string})=>{
+     await axiosInstance.post('/register', data)
+    
+}
+
 const authService = {
-    Login
+    Login, Register
 }
 
 export default authService

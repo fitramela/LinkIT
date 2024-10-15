@@ -1,6 +1,7 @@
-const {User} = require("../models");
+const {User, ProductImage, Product} = require("../models");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken")
+const cloudinary = require('cloudinary').v2;
 
  class Controller {
 
@@ -39,15 +40,39 @@ const jwt = require("jsonwebtoken")
 
     static async Register (req,res,next){
         try {
-            const {username, password} = req.body
-            const hashedPassword = await bcrypt.hash(password, 8)
-            const newUser = await user.create({username, password: hashedPassword,})
-            res.status(201).json({
-                message : `Success make an account with ${username}`
-            })
+            const {username, password} = req.body;
+
+
+            if (!username || !password) {
+                return res.status(400).json({ message: 'Username and password are required' });
+            }
+
+           
+            const hashedPassword = await bcrypt.hash(password, 10); 
+
+            
+            const newUser = await User.create({ username, password: hashedPassword });
+
+            return res.status(201).json({ message: 'User registered successfully', user: newUser });
         } catch (error) {
             console.log(error, 'error register')
             
+        }
+    }
+
+    // merchantt
+    static async AddProduct(req,res,next){
+        try {
+           const { title, sku, quantity, images } = req.body
+           const merchantId = req.user?.id
+           const product = await Product.create({ title, sku, quantity, merchantId })
+           for (const image of images) {
+               const result = await cloudinary.uploader.upload(image, { format: 'jpeg' });
+               await ProductImage.create({ productId: product.id, imageUrl: result.secure_url });
+           }
+           return res.status(201).json({ message: 'Product added successfully', product })
+        } catch (error) {
+            console.log(error)
         }
     }
  }
