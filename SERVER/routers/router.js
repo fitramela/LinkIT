@@ -9,9 +9,15 @@ router.get('/test', (req,res)=>{
 // auth
 router.post('/login' , Controller.Login)
 router.post('/register' , Controller.Register)
+
+// userr
+router.get('/productsPublic', Controller.GetProductsUser)
+
 // merchannnt
 router.use(authenticate)
 router.post('/product' , Controller.AddProduct)
+router.get('/products' , Controller.GetProductMerchant)
+
 
 
 

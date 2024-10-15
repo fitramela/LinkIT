@@ -1,6 +1,7 @@
 import { useForm } from 'react-hook-form';
 import axiosInstance from '../../axoisInstance/axios';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 interface typeAdd{
     title: string;
@@ -11,6 +12,7 @@ interface typeAdd{
 }
 
 const AddProduct = ()=>{
+    const nav = useNavigate()
     const [error, setError] = useState('')
     const { register, handleSubmit, formState: { errors } } = useForm<typeAdd>()
     
@@ -37,6 +39,7 @@ const AddProduct = ()=>{
             };
             console.log(formData, '<---form data')
             await addProduct(formData)
+            nav('/')
         } catch (error) {
             console.log(error,'error di add')
             setError((error as any)?.message as string)
@@ -46,7 +49,7 @@ const AddProduct = ()=>{
     return (
         <div className="flex items-center justify-center h-screen">
             <div className="bg-white p-8 rounded-lg shadow-lg w-1/2">
-                <h2 className="text-3xl font-bold mb-4">Add Product</h2>
+                <h2 className="text-3xl font-bold mb-4 ">Add Product</h2>
                 {error && <p className="text-red-500 text-sm">{error}</p>}
                 <form onSubmit={handleSubmit(onSubmit)} encType='multipart/form-data' className="space-y-4">
                     <input {...register('title', { required: 'Nama produk harus diisi' })} type="text" placeholder="Product Name" required className="block w-full px-4 py-2 mb-3 text-xl text-gray-700 bg-gray-200 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />

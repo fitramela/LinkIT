@@ -1,14 +1,15 @@
-
+import { Link, useNavigate } from "react-router-dom";
 const Navbar= ()=>{
+    const nav = useNavigate()
 return(
     <div className="navbar bg-base-100 shadow-lg">
   <div className="flex-1">
-    <a className="btn btn-ghost text-xl">LinkIT Shop</a>
+    <Link to={'/'} className="btn btn-ghost text-xl">LinkIT Shop</Link>
   </div>
   <div role="tablist" className="tabs tabs-lifted">
-  <a role="tab" className="tab tab-active" onClick={(e)=>{e.currentTarget.parentElement?.querySelectorAll('.tab').forEach(el => el.classList.remove('tab-active')); e.currentTarget.classList.add('tab-active')}}>Tab 1</a>
-  <a role="tab" className="tab" onClick={(e)=>{e.currentTarget.parentElement?.querySelectorAll('.tab').forEach(el => el.classList.remove('tab-active')); e.currentTarget.classList.add('tab-active')}}>Tab 2</a>
-  <a role="tab" className="tab" onClick={(e)=>{e.currentTarget.parentElement?.querySelectorAll('.tab').forEach(el => el.classList.remove('tab-active')); e.currentTarget.classList.add('tab-active')}}>Tab 3</a>
+  <Link to={'/'} role="tab" className="tab tab-active" onClick={(e)=>{e.currentTarget.parentElement?.querySelectorAll('.tab').forEach(el => el.classList.remove('tab-active')); e.currentTarget.classList.add('tab-active')}}>Tab 1</Link>
+  <Link to={'/addProduct'}  role="tab" className="tab" onClick={(e)=>{e.currentTarget.parentElement?.querySelectorAll('.tab').forEach(el => el.classList.remove('tab-active')); e.currentTarget.classList.add('tab-active')}}>Add Product</Link>
+  <Link to={'/merchantProducts'} role="tab" className="tab" onClick={(e)=>{e.currentTarget.parentElement?.querySelectorAll('.tab').forEach(el => el.classList.remove('tab-active')); e.currentTarget.classList.add('tab-active')}}>Ur Products</Link>
 </div>
   <div className="flex-none">
     <div className="dropdown dropdown-end">
@@ -33,8 +34,8 @@ return(
         tabIndex={0}
         className="card card-compact dropdown-content bg-base-100 z-[1] mt-3 w-52 shadow">
         <div className="card-body">
-          <span className="text-lg font-bold">8 Items</span>
-          <span className="text-info">Subtotal: $999</span>
+          <span className="text-lg font-bold">Ur Cart</span>
+          <span className="text-info">view your cart</span>
           <div className="card-actions">
             <button className="btn btn-primary btn-block">View cart</button>
           </div>
@@ -53,13 +54,25 @@ return(
         tabIndex={0}
         className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
         <li>
-          <a className="justify-between">
+          <Link to={'/'} className="justify-between">
             Profile
             <span className="badge">New</span>
-          </a>
+          </Link>
         </li>
-        <li><a>Settings</a></li>
-        <li><a>Logout</a></li>
+        <li><Link to={'/'}>Settings</Link></li>
+        <li>
+          <Link
+            to={localStorage.getItem('token') ? '/' : '/login'}
+            onClick={() => {
+                if (localStorage.getItem('token')) {
+                    localStorage.removeItem('token');
+                    nav('/login'); 
+                }
+            }}
+          >
+            {localStorage.getItem('token') ? 'Logout' : 'Login'}
+          </Link>
+        </li>
       </ul>
     </div>
   </div>

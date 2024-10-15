@@ -17,7 +17,7 @@ const Login = ()=>{
     const onSubmit = async (data: LoginFormInput)=>{
         try {
             await authService.Login(data)
-            nav('/home')
+            nav('/')
         } catch (error) {
             console.log(error)
             setError((error as any)?.response?.data.message as string)

@@ -34,6 +34,7 @@ const jwt = require("jsonwebtoken")
 
         } catch (error) {
             console.log(error, 'ini error');
+            
         }
     }
 
@@ -70,11 +71,51 @@ const jwt = require("jsonwebtoken")
            }
            const merchantId = req.user.id
            const product = await Product.create({ title, sku, quantity, merchantId , description})
-            await ProductImage.create({ productId: product.id, imageUrl })
-           return res.status(201).json({ message: 'Product added successfully', product })
+           if (product) {
+               await ProductImage.create({ productId: product.id, imageUrl })
+               return res.status(201).json({ message: 'Product added successfully', product })
+           } else {
+               return res.status(500).json({ message: 'Failed to create product' })
+           }
         } catch (error) {
             console.log(error)
         }
     }
+
+    static async GetProductMerchant(req, res, next){
+        try {
+            const UserId = req.user
+            const products = await Product.findAll({
+                where: {
+                    merchantId: UserId.id
+                },
+                include: [{
+                    model: ProductImage,
+                    as: 'ProductImages'
+                }]
+            });
+            res.json(products);
+        } catch (error) {
+            res.status(500).json({ error: error.message });
+        }
+    }
+
+
+    static async GetProductsUser(req, res, next){
+        try {
+           
+            const products = await Product.findAll({
+                include: [{
+                    model: ProductImage,
+                    as: 'ProductImages'
+                }]
+            });
+            res.json(products);
+        } catch (error) {
+            console.log(error, 'error fecth list')
+        }
+    }
+
+
  }
 module.exports = Controller
