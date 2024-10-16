@@ -10,7 +10,7 @@ interface Product {
     sku: string;
     description: string;
     quantity: number;
-    imageUrl: string;
+    // imageUrl: string;
     ProductImages: ProductImage[] 
   }
   interface ProductImage {
@@ -31,7 +31,7 @@ const ListProductUser = () => {
       const result = await getUserProducts();
       setProducts(result);
     };
-
+    
     fetchProducts();
   }, []);
 
@@ -45,10 +45,11 @@ const ListProductUser = () => {
       <div className="product-cards" style={{ display: 'flex', overflowX: 'auto', padding: '20px' }}>
         {products.map((product,i) => (
             <Link to={'/detailProductUser'} state={{product}} key={i} className="product-card" style={{ minWidth: '200px', maxWidth: '300px', margin: '10px', padding: '10px', border: '1px solid #ddd', borderRadius: '10px', boxShadow: '0 4px 8px rgba(0,0,0,0.1)' }}>
-            <img src={product.ProductImages[0].imageUrl}  alt={product.title} className="product-image" style={{ width: '100%', height: '150px', objectFit: 'cover', borderRadius: '10px 10px 0 0' }} />
+            <img src={product.ProductImages[0]?.imageUrl}  alt={product.title} className="product-image" style={{ width: '100%', height: '150px', objectFit: 'cover', borderRadius: '10px 10px 0 0' }} />
             <div className="product-info" style={{ padding: '10px' }}>
               <h3 style={{ marginBottom: '10px' }}>{product.title}</h3>
               <p>SKU: {product.sku}</p>
+              
               <p>Deskripsi: {product.description}</p>
               <p>Kuantitas: {product.quantity}</p>
             </div>

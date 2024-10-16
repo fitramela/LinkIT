@@ -31,7 +31,7 @@ const DetailProductUser = () => {
             <div className="card lg:card-side bg-base-100 shadow-xl ">
                 <figure className="w-96 h-96">
                     <img
-                        src={state.product.ProductImages[0].imageUrl }
+                        src={state.product.ProductImages[0]?.imageUrl }
                         alt={state.product.title} className="object-cover w-full h-full"/>
                 </figure>
                 <div className="card-body">
