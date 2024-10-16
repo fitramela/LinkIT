@@ -1,4 +1,4 @@
-import {  useNavigate } from "react-router-dom";
+import {  Link, useNavigate } from "react-router-dom";
 import authService from "./authService";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
@@ -36,6 +36,7 @@ const Login = ()=>{
                     <input {...register('password')} type="password" placeholder="Password" required className="block w-full px-4 py-2 text-xl text-gray-700 bg-gray-200 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
                     <button type="submit" className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md">Login</button>
                 </form>
+                <Link to={'/register'} className="text-blue-500 hover:underline flex my-3"> Dont have an account?</Link>
             </div>
         </div>
         </>

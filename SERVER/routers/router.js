@@ -17,6 +17,11 @@ router.get('/productsPublic', Controller.GetProductsUser)
 router.use(authenticate)
 router.post('/product' , Controller.AddProduct)
 router.get('/products' , Controller.GetProductMerchant)
+router.delete('/product/:id' , Controller.DeleteProduct)
+router.patch('/product/:id' , Controller.EditQuantity)
+router.post('/cart' , Controller.CreateCart)
+router.get('/cart', Controller.GetCartList)
+router.post('/checkout', Controller.Emailer)
 
 
 

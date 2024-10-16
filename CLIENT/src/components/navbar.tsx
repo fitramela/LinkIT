@@ -1,6 +1,10 @@
 import { Link, useNavigate } from "react-router-dom";
+import Modal from "./modal";
 const Navbar= ()=>{
     const nav = useNavigate()
+
+  
+
 return(
     <div className="navbar bg-base-100 shadow-lg">
   <div className="flex-1">
@@ -37,7 +41,8 @@ return(
           <span className="text-lg font-bold">Ur Cart</span>
           <span className="text-info">view your cart</span>
           <div className="card-actions">
-            <button className="btn btn-primary btn-block">View cart</button>
+            <button className="btn btn-primary btn-block" onClick={() => (document.getElementById('my_modal_4') as HTMLDialogElement)?.showModal()}>View cart</button>
+            <Modal/>
           </div>
         </div>
       </div>

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import authService from "./authService";
 
 interface RegisterFormInput{
@@ -32,6 +32,7 @@ const Register = () => {
               <input {...register('password')} type="password" placeholder="Password" required className="block w-full px-4 py-2 text-xl text-gray-700 bg-gray-200 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
               <button type="submit" className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md">Register</button>
             </form>
+            <Link to={'/login'} className="text-blue-500 hover:underline flex my-3"> already have an account?</Link>
           </div>
         </div>
     )
