@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from 'react';
 import axiosInstance from '../axoisInstance/axios';
 
@@ -8,7 +7,7 @@ interface Item {
 
 const Table = () => {
   const [cartData, setCartData] = useState<Item[]>([]);
-  const token =localStorage.getItem('token');
+  const token = localStorage.getItem('token');
 
   useEffect(() => {
     fetchCartData();
@@ -27,28 +26,35 @@ const Table = () => {
     }
   };
 
+  useEffect(() => {
+    const timer = setInterval(() => {
+      fetchCartData();
+    }, 1000);
+    return () => clearInterval(timer);
+  }, []);
+
   const handleCheckout = () => {
     try {
-        const email = prompt('Input your email');
-       
-        // const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+      const email = prompt('Input your email');
 
-// if (!email) {
-//     alert('There is no email');
-// } else if (!emailRegex.test(email)) {
-//     alert('Invalid email format');
-// } else {
-//     alert('Sent email');
-// }
-        console.log(email)
-        
-        axiosInstance.post('/checkout',{email}, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+      const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+      if (!email) {
+        alert('There is no email');
+      } else if (!emailRegex.test(email)) {
+        alert('Invalid email format');
+      } else {
+        alert('Sent email');
+      }
+      console.log(email)
+
+      axiosInstance.post('/checkout', { email }, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
     } catch (error) {
-        console.log(error)
+      console.log(error)
     }
   };
 

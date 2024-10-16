@@ -6,6 +6,7 @@ import Navbar from "../components/navbar";
     return (
         <>
         <Navbar/>
+        
         <Outlet/>
 
         </>
