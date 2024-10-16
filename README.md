@@ -20,21 +20,21 @@
    ```
 
 4. Buat file .env di direktori server dan sesuaikan konfigurasi database dengan perintah:
+
    ```
-JWT_SECRET=12345
-PORT=3000
--cloudinary
-Cloudinary_Cloud_name=dboexxeq0
-Cloudinary_API_key=624786798457878
-Cloudinary_API_secret=ZAZwT0eTApSsfDZ8eWmVy2PV5P8
--nodemailer
-EMAIL_USER=fitramelaniarais@gmail.com
-EMAIL_PASS=Manusia.007
-
-
+JWT_SECRET=
+PORT=
+# cloudinary
+Cloudinary_Cloud_name=
+Cloudinary_API_key=
+Cloudinary_API_secret=
+# nodemailer
+EMAIL_USER=
+EMAIL_PASS=
    ```
 
 5. Buat database dengan perintah:
+
    ```
    npx sequelize db:create
    npx sequelize db:migrate
